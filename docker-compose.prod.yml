@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+
+  node:
+    build:
+      dockerfile: Dockerfile
+      target: production
+    env_file:
+      - .env
+    volumes:
+      - ./data:/var/data
+    command: node /home/node/app/build/dist/app.js
