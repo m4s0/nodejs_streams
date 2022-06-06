@@ -31,9 +31,8 @@ create index account_routing_number_account_number_idx
 
 create table kraken.import_process
 (
-    id           varchar(36) primary key,
-    started_at   datetime not null,
-    completed_at datetime null
+    id         varchar(36) primary key,
+    started_at datetime not null
 )
     collate = utf8mb4_unicode_ci;
 
@@ -47,6 +46,7 @@ create table kraken.transaction
     from_account_number varchar(17) not null,
     amount              int         not null,
     currency            varchar(3)  not null,
+    imported_at         datetime    not null,
     constraint fk_account_id
         foreign key (account_id) references kraken.account (id),
     constraint fk_t_import_process_id
@@ -71,6 +71,7 @@ create table kraken.raw_transaction
     to_account_number   varchar(17) not null,
     amount              int         not null,
     currency            varchar(3)  not null,
+    imported_at         datetime    not null,
     constraint fk_rt_import_process_id
         foreign key (import_process_id) references kraken.import_process (id)
 )

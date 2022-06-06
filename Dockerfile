@@ -1,4 +1,4 @@
-FROM node:16.15.0 as base
+FROM node:18.3.0 as base
 
 RUN mkdir /home/node/app
 RUN chown -R node:node /home/node/app
@@ -16,7 +16,7 @@ RUN npm run lint
 RUN npm run build
 
 
-FROM node:16.15.0-alpine as prod
+FROM node:18.2.0-alpine3.15 as prod
 
 RUN apk add --no-cache bash
 
@@ -39,7 +39,7 @@ COPY --chown=node:node --from=base ./home/node/app/build/dist ./build/dist
 COPY --chown=node:node ./app ./
 
 
-FROM node:16.15.0-alpine as dev
+FROM node:18.2.0-alpine3.15 as dev
 
 RUN apk add --no-cache bash
 
